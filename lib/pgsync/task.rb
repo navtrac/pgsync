@@ -146,7 +146,7 @@ module PgSync
               "NOTHING"
             end
           end
-        destination.execute("INSERT INTO #{quoted_table} (#{fields}) OVERRIDING SYSTEM VALUE VALUES(SELECT #{fields} FROM #{quote_ident_full(temp_table)}) ON CONFLICT (#{on_conflict}) DO #{action}")
+        destination.execute("INSERT INTO #{quoted_table} (#{fields}) OVERRIDING SYSTEM VALUE (SELECT #{fields} FROM #{quote_ident_full(temp_table)}) ON CONFLICT (#{on_conflict}) DO #{action}")
       else
         # use delete instead of truncate for foreign keys
         if opts[:defer_constraints_v1] || opts[:defer_constraints_v2]
